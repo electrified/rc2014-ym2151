@@ -12,7 +12,7 @@
   (page A4)
   (title_block
     (title "RC2014 YM2151 sound card")
-    (date %%date%%)
+    (date "2021-11-20 12:07:43")
     (rev %%version%%)
   )
 
@@ -4864,8 +4864,8 @@
     )
   )
 
-  (gr_text "Date: %%date%% Version: %%version%%" (at 83.4 160) (layer B.SilkS) (tstamp 61994160)
-    (effects (font (size 1.5 1.5) (thickness 0.3)) (justify mirror))
+  (gr_text "Rev: %%version%%" (at 160.1 160.1) (layer F.SilkS) (tstamp 61994160)
+    (effects (font (size 1.5 1.5) (thickness 0.3)) (justify right))
   )
   (gr_text " -OP" (at 153.9 152) (layer F.SilkS) (tstamp 61985CCA)
     (effects (font (size 1 1) (thickness 0.15)))
