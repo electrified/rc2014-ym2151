@@ -20,7 +20,7 @@ jobs:
   FabricationAndDocumentation:
     env:
       # Set this to your local timezone. See https://www.wikiwand.com/en/List_of_tz_database_time_zones for valid strings.
-      Timezone: America/Los_Angeles
+      Timezone: Europe/London
       # Set this to the output folder for all of the generated files. Unless you have a very
       # good reason to change this you should leave it as KiBotOutput.
       OutputFolder: KiBotOutput
