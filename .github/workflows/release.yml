@@ -30,7 +30,8 @@ jobs:
     steps:
       # Check out the files
       - uses: actions/checkout@v2
-
+        with: 
+          submodules: recursive
       # Get the version of the GitHub release for use later.
       - name: Get GitHub release version
         id: get_version

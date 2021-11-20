@@ -6,8 +6,8 @@ kibot:
 preflight:
   # These are off by default so it's possible to generate output files prior to the board being
   # completely finished (e.g. for draft review, etc.).
-  run_erc: false
-  run_drc: false
+  run_erc: true
+  run_drc: true
   # This is important to set to true so replacement of version and date strings in the release
   # build process works correctly.
   check_zone_fills: true
