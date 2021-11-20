@@ -1,0 +1,29 @@
+# This script is called by the .github/workflows/release.yml workflow to generate documentation
+# (PDFs, interactive BOMs, board images).
+kibot:
+  version: 1
+
+preflight:
+  run_erc: false
+  run_drc: false
+  # This is important to set to true so replacement of version and date strings in the release
+  # build process works correctly.
+  check_zone_fills: true
+  ignore_unconnected: false
+
+global:
+  # Sets the default output filename for all generated files. You likely don't have to change this.
+  output: "%f-%i.%x"
+
+filters:
+  - name: "exclude_any"
+    type: "generic"
+    comment: "Exclude logos, testpoints, fiducials and power"
+    exclude_any:
+      - column: Reference
+        regex: "^(G|#|TP|F).*"
+
+# This imports the KiBot scripts that actuall do all the generation. If you want to
+# generate different things/more things then change these to point to other .kibot.yaml files.
+import:
+  - includes/documentation-2layer.kibot.yaml

@@ -1,0 +1,26 @@
+# This workflow runs erc and drc checks on every pull request that touches a scehmatic or PCB file.
+
+# To use this workflow in your own repo you need to edit the environment variables in the env: section
+# below.
+name: "KiBot - Preflight only"
+
+on:
+  pull_request:
+    paths:
+      - "*.sch"
+      - "*.kicad_pcb"
+      - ".kibot/*.kibot.yaml"
+      - ".github/workflows/*.yml"
+
+jobs:
+  Preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # Run KiBot with the preflight script
+      - uses: INTI-CMNB/KiBot@v1
+        with:
+          config: .kibot/preflight.kibot.yaml
+          schema: ${{ github.event.repository.name }}.sch
+          board: ${{ github.event.repository.name }}.kicad_pcb

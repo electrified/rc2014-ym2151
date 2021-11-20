@@ -1,0 +1,88 @@
+# This workflow generates documentation (PDFs, interactive BOMs, board images). The
+# The version number and date of the design is automatically updated in the schematic
+# file and on the PCB. The version number is set via an environment variable
+# and by default is `pre-release` since this runs outside of the release process
+# so there's no formal release number to use.
+
+# To use this workflow in your own repo you need to edit the environment variables in the env: section
+# below.
+name: "KiBot - Generate documentation only"
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Design version"
+        required: true
+        default: "pre-release"
+
+jobs:
+  Documentation:
+    env:
+      # Set this to your local timezone. See https://www.wikiwand.com/en/List_of_tz_database_time_zones for valid strings.
+      Timezone: Europe/London
+      # Set this to the output folder for all of the generated files. Unless you have a very
+      # good reason to change this you should leave it as KiBotOutput.
+      OutputFolder: KiBotOutput
+    runs-on: ubuntu-latest
+
+    # These are all the steps that generate the files.
+    steps:
+      # Check out the files
+      - uses: actions/checkout@v2
+
+      # Get the current date and time, in the timezone specified above, for use later.
+      - name: Get current date and time
+        id: date
+        run: echo "::set-output name=date::$(TZ='${{ env.Timezone }}' date +'%Y-%m-%d %T')"
+
+      # Do a string replacement in the schematic file to set the version and date.
+      # Any instance of %%version%% in the schematic gets replaced with the release version.
+      # Any instance of %%date%% in the schematic gets replaced with the release date and time.
+      - name: Set schematic version
+        uses: jacobtomlinson/gha-find-replace@master
+        with:
+          include: ".*.sch"
+          find: "%%version%%"
+          replace: ${{ github.event.inputs.version }}
+
+      - name: Set schematic date
+        uses: jacobtomlinson/gha-find-replace@master
+        with:
+          include: ".*.sch"
+          find: "%%date%%"
+          replace: ${{ steps.date.outputs.date }}
+
+      # Do a string replacement in the PCB file to set the version and date.
+      # Any instance of %%version%% in the schematic gets replaced with the release version.
+      # Any instance of %%date%% in the schematic gets replaced with the release date and time.
+      - name: Set PCB version
+        uses: jacobtomlinson/gha-find-replace@master
+        with:
+          include: ".*.kicad_pcb"
+          find: "%%version%%"
+          replace: ${{ github.event.inputs.version }}
+
+      - name: Set PCB date
+        uses: jacobtomlinson/gha-find-replace@master
+        with:
+          include: ".*.kicad_pcb"
+          find: "%%date%%"
+          replace: ${{ steps.date.outputs.date }}
+
+      # Actually run KiBot to generate all the files. The KiBot script used is
+      # in the .kibot/release.kibot.yaml folder.
+      - name: Generate documentation
+        uses: INTI-CMNB/KiBot@v1
+        with:
+          config: .kibot/documentation-only.kibot.yaml
+          dir: ${{ env.OutputFolder }}
+          schema: ${{ github.event.repository.name }}.sch
+          board: ${{ github.event.repository.name }}.kicad_pcb
+
+      # Archive all the artifacts from output and attach to the action's results.
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: schematic
+          path: ${{ env.OutputFolder }}/**
