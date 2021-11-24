@@ -32,16 +32,29 @@ jobs:
       - uses: actions/checkout@v2
         with: 
           submodules: recursive
-      # Get the version of the GitHub release for use later.
+
+      # Get the version of the GitHub release for use later. This is only valid
+      # when run in a release context
       - name: Get GitHub release version
-        id: get_version
+        id: get_github_version
         uses: battila7/get-version-action@v2
         if: startsWith(github.ref, 'refs/tags/')
+      - name: Store GitHub release version
+        id: save_github_version
+        run: echo "version=${{ steps.get_github_version.outputs.version }}" >> $GITHUB_ENV
+        if: startsWith(github.ref, 'refs/tags/')
+
+      # Get the version from the workflow input. This is only valid
+      # when run manually as a workflow.
+      - name: Store workflow version
+        id: save_workflow_version
+        run: echo "version=${{ github.event.inputs.version }}" >> $GITHUB_ENV
+        if: startsWith(github.ref, 'refs/tags/') == false
 
       # Get the current date and time, in the timezone specified above, for use later.
       - name: Get current date and time
         id: date
-        run: echo "::set-output name=date::$(TZ='${{ env.Timezone }}' date +'%Y-%m-%d')"
+        run: echo "::set-output name=date::$(TZ='${{ env.Timezone }}' date +'%Y-%m-%d %T')"
 
       # Do a string replacement in the schematic file to set the version and date.
       # Any instance of %%version%% in the schematic gets replaced with the release version.
@@ -51,7 +64,7 @@ jobs:
         with:
           include: ".*.sch"
           find: "%%version%%"
-          replace: ${{ steps.get_version.outputs.version }}
+          replace: ${{ env.version }}
 
       - name: Set schematic date
         uses: jacobtomlinson/gha-find-replace@v1
@@ -68,9 +81,16 @@ jobs:
         with:
           include: ".*.kicad_pcb"
           find: "%%version%%"
-          replace: ${{ steps.get_version.outputs.version }}
+          replace: ${{ env.version }}
 
-      - name: Set PCB date
+      - name: Set PCB date in page settings
+        uses: jacobtomlinson/gha-find-replace@v1
+        with:
+          include: ".*.kicad_pcb"
+          find: "date %%date%%"
+          replace: 'date "${{ steps.date.outputs.date }}"'
+
+      - name: Set PCB date on PCB layers
         uses: jacobtomlinson/gha-find-replace@v1
         with:
           include: ".*.kicad_pcb"
