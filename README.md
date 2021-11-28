@@ -29,3 +29,5 @@ https://ayce.dev/emptyx16.html#ym2151-fm-operator-type-m-opm
 https://www.youtube.com/watch?v=BG6q53p7Z10
 https://www.youtube.com/watch?v=GnbT23wGcIA
 https://www.youtube.com/watch?v=C8K_VtGyjHM
+
+https://vgmrips.net/wiki/OPM_File_Format

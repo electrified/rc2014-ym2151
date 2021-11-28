@@ -4,10 +4,12 @@
 ; https://github.com/jblang/SN76489
 ;
 ; Enhanced with multi-chip support by Marco Maccaferri
+; YM2151 support hacked in by Ed Brindley
 ;
 ; Compile with:
 ;
 ;   TASM -80 -b VGMPLAY.ASM VGMPLAY.COM
+; or sjasmplus --raw=vgmplay.com VGMPLAY.ASM
 
 P8X180          .EQU    0                   ; System configuration
 RC2014          .EQU    1
@@ -18,17 +20,23 @@ RDAT            .EQU    83H                 ; Primary AY-3-8910 Register data
 RSEL2           .EQU    88H                 ; Secondary AY-3-8910 Register selection
 RDAT2           .EQU    89H                 ; Secondary AY-3-8910 Register data
 PSGREG          .EQU    84H                 ; Primary SN76489
-PSG2REG         .EQU    8AH                 ; Seconday SN76489
+PSG2REG         .EQU    8AH                 ; Secondary SN76489
+YM2151_SEL      .EQU    0B0H
+YM2151_DAT      .EQU    0B1H
 FRAME_DLY       .EQU    48                  ; Frame delay (~ 1/44100)
                 .ENDIF
 
                 .IF RC2014
 RSEL            .EQU    0E0H                ; Primary AY-3-8910 Register selection
 RDAT            .EQU    0E1H                ; Primary AY-3-8910 Register data
-RSEL2           .EQU    0A0H                ; Seconday AY-3-8910 Register selection
-RDAT2           .EQU    0A1H                ; Seconday AY-3-8910 Register data
+RSEL2           .EQU    0A0H                ; Secondary AY-3-8910 Register selection
+RDAT2           .EQU    0A1H                ; Secondary AY-3-8910 Register data
 PSGREG          .EQU    0FFH                ; Primary SN76489
-PSG2REG         .EQU    0FBH                ; Seconday SN76489
+PSG2REG         .EQU    0FBH                ; Secondary SN76489
+YM2151_SEL      .EQU    0B0H                ; Primary YM2151 register selection
+YM2151_DAT      .EQU    0B1H                ; Primary YM2151 register data
+YM2151_SEL2     .EQU    0D0H                ; Secondary YM2151 register selection
+YM2151_DAT2     .EQU    0D1H                ; Secondary YM2151 register data
 FRAME_DLY       .EQU    15                  ; Frame delay (~ 1/44100)
                 .ENDIF
 
@@ -141,6 +149,8 @@ EXIT
                 OUT     (RDAT), A
                 OUT     (RDAT2), A
 
+                ; TODO Mute all channels on YM2151
+
                 LD      SP, (OLDSTACK)
                 RST     00H
 
@@ -186,7 +196,7 @@ PSG2            CP      30H                 ; Write byte to second SN76489.
                 OUT     (PSG2REG), A
                 JR      NEXT
 AY              CP      0A0H
-                JR      NZ, WAITNN
+                JR      NZ, YM2151
                 LD      A, (HL)
                 INC     HL
                 BIT     7, A                ; Bit 7=1 for second AY-3-8910
@@ -201,6 +211,24 @@ AY1             OUT     (RSEL), A
                 LD      A, (HL)
                 INC     HL
                 OUT     (RDAT), A
+                JR      NEXT
+YM2151          CP      054H
+                JR      NZ, YM2151_2
+                LD      A, (HL)
+                INC     HL
+                OUT     (YM2151_SEL), A
+                LD      A, (HL)
+                INC     HL
+                OUT     (YM2151_DAT), A
+                JR      NEXT
+YM2151_2         CP      0A4H
+                JR      NZ, WAITNN
+                LD      A, (HL)
+                INC     HL
+                OUT     (YM2151_SEL2), A
+                LD      A, (HL)
+                INC     HL
+                OUT     (YM2151_DAT2), A
                 JR      NEXT
 WAITNN          CP      61H                 ; Wait nn samples
                 JR      NZ, WAIT60
