@@ -1,11 +1,17 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>
-#define REG_SEL_PORT 0xA0
-#define REG_DATA_PORT 0xA1
+#define REG_SEL_PORT 0xA0u
+#define REG_DATA_PORT 0xA1u
 
+#ifdef __SDCC
 __sfr __at REG_SEL_PORT REG_SEL;
 __sfr __at REG_DATA_PORT REG_DATA;
+#else
+
+unsigned char REG_SEL;
+unsigned char REG_DATA;
+#endif
 
 struct operator
 {
@@ -37,17 +43,17 @@ void operator_setRR(struct operator *o, uint8_t val) { o->d1l_rr = (o->d1l_rr & 
 
 void print_operator(struct operator *o)
 {
-        printf("Detune (1) %d", operator_getDT1(o));
-        printf("Phase Multiply %d", operator_getMUL(o));
-        printf("Total Level %d", operator_getTL);
-        printf("Key Scaling %d", operator_getKS);
-        printf("Attack Rate %d", operator_getAR);
-        printf("AMS Enable %d", operator_getAME);
-        printf("First Decay Rate %d", operator_getD1R);
-        printf("Second Detune %d", operator_getDT2);
-        printf("Second Decay Rate %d", operator_getD2R);
-        printf("First Decay Level %d", operator_getD1L);
-        printf("Release Rate %d", operator_getRR);
+        printf("Detune (1) %d\n", operator_getDT1(o));
+        printf("Phase Multiply %d\n", operator_getMUL(o));
+        printf("Total Level %d\n", operator_getTL);
+        printf("Key Scaling %d\n", operator_getKS);
+        printf("Attack Rate %d\n", operator_getAR);
+        printf("AMS Enable %d\n", operator_getAME);
+        printf("First Decay Rate %d\n", operator_getD1R);
+        printf("Second Detune %d\n", operator_getDT2);
+        printf("Second Decay Rate %d\n", operator_getD2R);
+        printf("First Decay Level %d\n", operator_getD1L);
+        printf("Release Rate %d\n", operator_getRR);
 }
 
 struct voice
@@ -78,22 +84,22 @@ uint8_t voice_getAMS(struct voice *v) { return v->pms_ams & 0x02; }
 
 void print_voice(struct voice *v)
 {
-        printf("Noise Enable %d", voice_getNE(v));
-        printf("Noise Frequency %d", voice_getNFRQ(v));
-        printf("Low Frequency %d", v->lfrq);
-        printf("Phase or aplitude modulation %d", voice_getIsPhaseOrAmplitude(v));
-        printf("Modulation depth %d", voice_getMD(v));
-        printf("Waveform %d", voice_getW(v));
-        printf("Right/Left %d", voice_getRL(v));
-        printf("Self Feedback Level %d", voice_getFB(v));
-        printf("Connection (AKA algorithm) %d", voice_getCON(v));
-        printf("Phase modulation Sensitivity %d", voice_getPMS(v));
-        printf("Amplitude Modulation Sensitivity %d", voice_getAMS(v));
+        printf("Noise Enable %d\n", voice_getNE(v));
+        printf("Noise Frequency %d\n", voice_getNFRQ(v));
+        printf("Low Frequency %d\n", v->lfrq);
+        printf("Phase or aplitude modulation %d\n", voice_getIsPhaseOrAmplitude(v));
+        printf("Modulation depth %d\n", voice_getMD(v));
+        printf("Waveform %d\n", voice_getW(v));
+        printf("Right/Left %d\n", voice_getRL(v));
+        printf("Self Feedback Level %d\n", voice_getFB(v));
+        printf("Connection (AKA algorithm) %d\n", voice_getCON(v));
+        printf("Phase modulation Sensitivity %d\n", voice_getPMS(v));
+        printf("Amplitude Modulation Sensitivity %d\n", voice_getAMS(v));
 }
 
 void write_register(uint8_t reg, uint8_t value)
 {
-        printf("IO reg: %#010x val: %#010x", reg, value);
+        printf("IO reg: %#02x val: %#02x\n", reg, value);
         REG_SEL = reg;
         REG_DATA = value;
 }
@@ -145,6 +151,8 @@ void main()
         note_on_off(7, 0);
         note_on_off(7, 0b1111);
 
+        print_voice(&v);
+        
         //todo wait
 
         //  while(1) {
