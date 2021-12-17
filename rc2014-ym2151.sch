@@ -80,7 +80,6 @@ NoConn ~ 1120 7150
 NoConn ~ 1120 7250
 NoConn ~ 1120 7350
 NoConn ~ 1120 7450
-NoConn ~ 1120 5750
 NoConn ~ 1120 5850
 NoConn ~ 1120 4350
 NoConn ~ 1120 4250
@@ -524,17 +523,6 @@ Text Label 6840 3170 0    60   ~ 0
 ~RESET
 Wire Wire Line
 	7100 2970 6600 2970
-$Comp
-L electrified:YM3012 U3
-U 1 1 6174B77E
-P 7600 3770
-F 0 "U3" H 7900 5180 50  0000 C CNN
-F 1 "YM3012" H 7800 4920 50  0000 C CNN
-F 2 "Package_DIP:DIP-16_W7.62mm_Socket" H 8250 2370 50  0001 C CNN
-F 3 "" H 8350 3270 50  0001 C CNN
-	1    7600 3770
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	7100 3070 6600 3070
 Wire Wire Line
@@ -580,7 +568,7 @@ U 1 1 61A169E8
 P 8480 2000
 F 0 "C7" H 8568 2046 50  0000 L CNN
 F 1 "10uF / Omit?" H 8568 1955 50  0000 L CNN
-F 2 "Capacitor_THT:C_Disc_D3.8mm_W2.6mm_P2.50mm" H 8480 2000 50  0001 C CNN
+F 2 "Capacitor_THT:C_Radial_D4.0mm_H7.0mm_P1.50mm" H 8480 2000 50  0001 C CNN
 F 3 "~" H 8480 2000 50  0001 C CNN
 	1    8480 2000
 	1    0    0    -1  
@@ -617,8 +605,6 @@ Wire Wire Line
 Connection ~ 9780 4100
 Wire Wire Line
 	9780 4100 10120 4100
-Wire Wire Line
-	8100 3270 8580 3270
 Wire Wire Line
 	8580 3270 8580 4000
 Wire Wire Line
@@ -667,7 +653,7 @@ U 1 1 61AF546F
 P 9770 800
 F 0 "C10" V 9900 800 50  0000 C CNN
 F 1 "4.7uF" V 9990 800 50  0000 C CNN
-F 2 "Capacitor_THT:CP_Radial_D7.5mm_P2.50mm" H 9770 800 50  0001 C CNN
+F 2 "Capacitor_THT:CP_Radial_D5.0mm_P2.50mm" H 9770 800 50  0001 C CNN
 F 3 "~" H 9770 800 50  0001 C CNN
 	1    9770 800 
 	0    -1   -1   0   
@@ -678,7 +664,7 @@ U 1 1 61AF617A
 P 9770 1000
 F 0 "C11" V 9541 1000 50  0000 C CNN
 F 1 "4.7uF" V 9632 1000 50  0000 C CNN
-F 2 "Capacitor_THT:CP_Radial_D7.5mm_P2.50mm" H 9770 1000 50  0001 C CNN
+F 2 "Capacitor_THT:CP_Radial_D5.0mm_P2.50mm" H 9770 1000 50  0001 C CNN
 F 3 "~" H 9770 1000 50  0001 C CNN
 	1    9770 1000
 	0    -1   -1   0   
@@ -693,12 +679,12 @@ Text Label 9420 1000 0    50   ~ 0
 R
 NoConn ~ 1120 5650
 $Comp
-L Connector_Generic:Conn_01x07 J1
+L Connector_Generic:Conn_01x06 J1
 U 1 1 61B3501F
 P 10270 5640
 F 0 "J1" H 10350 5682 50  0000 L CNN
 F 1 "Conn_01x03" H 10350 5591 50  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x07_P2.54mm_Vertical" H 10270 5640 50  0001 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical" H 10270 5640 50  0001 C CNN
 F 3 "~" H 10270 5640 50  0001 C CNN
 	1    10270 5640
 	1    0    0    -1  
@@ -707,14 +693,10 @@ Text Label 6600 3170 0    50   ~ 0
 CT1
 Text Label 6600 3270 0    50   ~ 0
 CT2
-Text Label 6600 3370 0    50   ~ 0
-~IRQ
-Text Label 10070 5340 2    50   ~ 0
-CT1
 Text Label 10070 5440 2    50   ~ 0
-CT2
+CT1
 Text Label 10070 5540 2    50   ~ 0
-~IRQ
+CT2
 NoConn ~ 1120 3650
 NoConn ~ 1120 3750
 Wire Wire Line
@@ -1301,4 +1283,21 @@ Wire Wire Line
 Connection ~ 1420 5350
 Wire Wire Line
 	8100 3070 8990 3070
+Wire Wire Line
+	8100 3270 8580 3270
+$Comp
+L electrified:YM3012 U3
+U 1 1 6174B77E
+P 7600 3770
+F 0 "U3" H 7900 5180 50  0000 C CNN
+F 1 "YM3012" H 7800 4920 50  0000 C CNN
+F 2 "Package_DIP:DIP-16_W7.62mm_Socket" H 8250 2370 50  0001 C CNN
+F 3 "" H 8350 3270 50  0001 C CNN
+	1    7600 3770
+	1    0    0    -1  
+$EndComp
+Text Label 1120 5750 0    50   ~ 0
+~INT
+Text Label 6600 3370 0    50   ~ 0
+~INT
 $EndSCHEMATC

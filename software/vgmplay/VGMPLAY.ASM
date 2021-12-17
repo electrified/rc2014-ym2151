@@ -33,8 +33,8 @@ RSEL2           .EQU    0A0H                ; Secondary AY-3-8910 Register selec
 RDAT2           .EQU    0A1H                ; Secondary AY-3-8910 Register data
 PSGREG          .EQU    0FFH                ; Primary SN76489
 PSG2REG         .EQU    0FBH                ; Secondary SN76489
-YM2151_SEL      .EQU    0B0H                ; Primary YM2151 register selection
-YM2151_DAT      .EQU    0B1H                ; Primary YM2151 register data
+YM2151_SEL      .EQU    0FEH                ; Primary YM2151 register selection
+YM2151_DAT      .EQU    0FFH                ; Primary YM2151 register data
 YM2151_SEL2     .EQU    0D0H                ; Secondary YM2151 register selection
 YM2151_DAT2     .EQU    0D1H                ; Secondary YM2151 register data
 FRAME_DLY       .EQU    15                  ; Frame delay (~ 1/44100)
