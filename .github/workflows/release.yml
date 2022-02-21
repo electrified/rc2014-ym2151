@@ -1,3 +1,25 @@
+# MIT License
+
+# Copyright (c) 2021 Neil Enns
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 # This workflow generates documentation (PDFs, interactive BOMs, board images) and fabrication
 # files for JLCPCB and PCBWay. The version number and date of the design is automatically
 # updated in the schematic file and on the PCB based on the GitHub release version and date.
@@ -30,7 +52,7 @@ jobs:
     steps:
       # Check out the files
       - uses: actions/checkout@v2
-        with: 
+              with: 
           submodules: recursive
 
       # Get the version of the GitHub release for use later. This is only valid
@@ -95,7 +117,7 @@ jobs:
         with:
           include: ".*.kicad_pcb"
           find: "%%date%%"
-          replace: ${{ steps.date.outputs.date }}
+          replace: '"${{ steps.date.outputs.date }}"'
 
       # Actually run KiBot to generate all the files. The KiBot script used is
       # in the .kibot/release.kibot.yaml folder.

@@ -1,5 +1,90 @@
+# MIT License
+
+# Copyright (c) 2021 Neil Enns
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 # This KiBot script generates gerbers, drill, bom, and position files for submitting
 # two layer boards to JLCPCB.
+# variants:
+#   - name: rotated
+#     comment: "Just a place holder for the rotation filter"
+#     type: kibom
+#     variant: rotated
+#     pre_transform: fix_rotation
+
+# filters:
+#   - name: only_jlc_parts
+#     comment: "Only parts with JLC code"
+#     type: generic
+#     include_only:
+#       - column: "LCSC"
+#         regex: '^C\d+'
+#   - name: fix_rotation
+#     comment: "Adjust rotation for JLC"
+#     type: rot_footprint
+#     negative_bottom: true
+#     # Rotation list from https://github.com/matthewlai/JLCKicadTools/blob/master/jlc_kicad_tools/cpl_rotations_db.csv
+#     rotations:
+#       - ["^R_Array_Convex_", 90]
+#       - ["^R_Array_Concave_", 90]
+#       - ["^SOT-223", 180]
+#       - ["^SOT-23", 180]
+#       - ["^SOT-89", 180]
+#       - ["^TSOT-23", 180]
+#       - ["^SOT-353", 180]
+#       - ["^SOT-363", 180]
+#       - ["^QFN-", 270]
+#       - ["^LQFP-", 270]
+#       - ["^TQFP-", 270]
+#       - ["^SOP-4_", 0]
+#       - ["^SOP-(?!18_)", 270]
+#       - ["^TSSOP-", 270]
+#       - ["^SSOP-", 270]
+#       - ["^DFN-", 270]
+#       - ["^SOIC-", 270]
+#       - ["^SOP-18_", 0]
+#       - ["^VSSOP-10_", 270]
+#       - ["^VSSOP-8_", 270]
+#       - ["^TSOP-6", 270]
+#       - ["^CP_EIA-", 180]
+#       - ["^CP_Elec_8x10.5", 180]
+#       - ["^CP_Elec_6.3x7.7", 180]
+#       - ["^CP_Elec_8x6.7", 180]
+#       - ["^CP_Elec_8x10", 180]
+#       - ["^CP_Elec_10x10", 180]
+#       - ["^(.*?_|V)?QFN-(16|20|24|28|40)(-|_|$)", 270]
+#       - ["^Bosch_LGA-8_2x2.5mm_P0.65mm_ClockwisePinNumbering", 90]
+#       - ["^PowerPAK_SO-8_Single", 270]
+#       - ["^HTSSOP-28-1EP_4.4x9.7mm*", 270]
+#       - ["^PUIAudio_SMT_0825_S_4_R*", 270]
+#       - ["^USB_C_Receptacle_HRO_TYPE-C-31-M-12*", 180]
+#       - ["ESP32-WROOM-32", 270]
+#       - ["^SOIC127P798X216-8N", -90]
+#       - ["^SW_DIP_SPSTx01_Slide_Copal_CHS-01B_W7.62mm_P1.27mm", -180]
+#       - ["^BatteryHolder_Keystone_1060_1x2032", -180]
+#       - ["^SO-14", -90]
+#       - ["^HTSSOP-", 270]
+#       - ["^USB_C_Receptacle_XKB_U262-16XN-4BVC11", 180]
+#       - ["^Relay_DPDT_Omron_G6K-2F-Y", 270]
+#       - ["^RP2040-QFN-56", 270]
+
 outputs:
   - name: JLCPCB_gerbers
     comment: Gerbers - JLCPCB
@@ -39,6 +124,52 @@ outputs:
       pth_id: "PTH"
       npth_id: "NPTH"
       metric_units: false
+
+  # - name: JLCPCB_position
+  #   comment: "Pick and place - JLCPCB"
+  #   type: position
+  #   dir: JLCPCB
+  #   options:
+  #     variant: rotated
+  #     output: "%f_cpl_jlc.%x"
+  #     format: CSV
+  #     units: millimeters
+  #     separate_files_for_front_and_back: false
+  #     only_smd: true
+  #     columns:
+  #       - id: Ref
+  #         name: Designator
+  #       - Val
+  #       - Package
+  #       - id: PosX
+  #         name: "Mid X"
+  #       - id: PosY
+  #         name: "Mid Y"
+  #       - id: Rot
+  #         name: Rotation
+  #       - id: Side
+  #         name: Layer
+
+  # - name: JLCPCB_bom
+  #   comment: "BOM - JLCPCB"
+  #   type: bom
+  #   dir: JLCPCB
+  #   options:
+  #     output: "%f_%i_jlc.%x"
+  #     exclude_filter: only_jlc_parts
+  #     ref_separator: ","
+  #     columns:
+  #       - field: Value
+  #         name: Comment
+  #       - field: References
+  #         name: Designator
+  #       - Footprint
+  #       - field: "LCSC"
+  #         name: "LCSC Part #"
+  #     csv:
+  #       hide_pcb_info: true
+  #       hide_stats_info: true
+  #       quote_all: true
 
   - name: JLCPCB
     comment: "Gerber and drill zip - JLCPCB"
