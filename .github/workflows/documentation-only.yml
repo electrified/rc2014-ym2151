@@ -42,14 +42,14 @@ jobs:
       - name: Set schematic version
         uses: jacobtomlinson/gha-find-replace@master
         with:
-          include: ".*.sch"
+          include: ".*.kicad_sch"
           find: "%%version%%"
           replace: ${{ github.event.inputs.version }}
 
       - name: Set schematic date
         uses: jacobtomlinson/gha-find-replace@master
         with:
-          include: ".*.sch"
+          include: ".*.kicad_sch"
           find: "%%date%%"
           replace: ${{ steps.date.outputs.date }}
 
@@ -77,7 +77,7 @@ jobs:
         with:
           config: .kibot/documentation-only.kibot.yaml
           dir: ${{ env.OutputFolder }}
-          schema: ${{ github.event.repository.name }}.sch
+          schema: ${{ github.event.repository.name }}.kicad_sch
           board: ${{ github.event.repository.name }}.kicad_pcb
 
       # Archive all the artifacts from output and attach to the action's results.

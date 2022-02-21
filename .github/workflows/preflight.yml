@@ -7,7 +7,7 @@ name: "KiBot - Preflight only"
 on:
   pull_request:
     paths:
-      - "*.sch"
+      - "*.kicad_sch"
       - "*.kicad_pcb"
       - ".kibot/*.kibot.yaml"
       - ".github/workflows/*.yml"
@@ -22,5 +22,5 @@ jobs:
       - uses: INTI-CMNB/KiBot@v1
         with:
           config: .kibot/preflight.kibot.yaml
-          schema: ${{ github.event.repository.name }}.sch
+          schema: ${{ github.event.repository.name }}.kicad_sch
           board: ${{ github.event.repository.name }}.kicad_pcb

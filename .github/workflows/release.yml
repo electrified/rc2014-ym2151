@@ -62,14 +62,14 @@ jobs:
       - name: Set schematic version
         uses: jacobtomlinson/gha-find-replace@v1
         with:
-          include: ".*.sch"
+          include: ".*.kicad_sch"
           find: "%%version%%"
           replace: ${{ env.version }}
 
       - name: Set schematic date
         uses: jacobtomlinson/gha-find-replace@v1
         with:
-          include: ".*.sch"
+          include: ".*.kicad_sch"
           find: "%%date%%"
           replace: ${{ steps.date.outputs.date }}
 
@@ -104,7 +104,7 @@ jobs:
         with:
           config: .kibot/release.kibot.yaml
           dir: ${{ env.OutputFolder }}
-          schema: ${{ github.event.repository.name }}.sch
+          schema: ${{ github.event.repository.name }}.kicad_sch
           board: ${{ github.event.repository.name }}.kicad_pcb
 
       # Install the zip command line tool to package up the output
