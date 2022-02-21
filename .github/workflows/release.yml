@@ -52,7 +52,7 @@ jobs:
     steps:
       # Check out the files
       - uses: actions/checkout@v2
-              with: 
+        with:
           submodules: recursive
 
       # Get the version of the GitHub release for use later. This is only valid
