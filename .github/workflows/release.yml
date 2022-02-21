@@ -122,7 +122,7 @@ jobs:
       # Actually run KiBot to generate all the files. The KiBot script used is
       # in the .kibot/release.kibot.yaml folder.
       - name: Generate documentation and fabrication files
-        uses: INTI-CMNB/KiBot@test_import
+        uses: INTI-CMNB/KiBot@v1_k6
         with:
           config: .kibot/release.kibot.yaml
           dir: ${{ env.OutputFolder }}
