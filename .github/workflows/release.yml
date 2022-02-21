@@ -105,19 +105,12 @@ jobs:
           find: "%%version%%"
           replace: ${{ env.version }}
 
-      - name: Set PCB date in page settings
-        uses: jacobtomlinson/gha-find-replace@v1
-        with:
-          include: ".*.kicad_pcb"
-          find: "date %%date%%"
-          replace: 'date "${{ steps.date.outputs.date }}"'
-
       - name: Set PCB date on PCB layers
         uses: jacobtomlinson/gha-find-replace@v1
         with:
           include: ".*.kicad_pcb"
           find: "%%date%%"
-          replace: '"${{ steps.date.outputs.date }}"'
+          replace: "${{ steps.date.outputs.date }}"
 
       # Actually run KiBot to generate all the files. The KiBot script used is
       # in the .kibot/release.kibot.yaml folder.
