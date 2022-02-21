@@ -76,7 +76,7 @@ jobs:
       # Get the current date and time, in the timezone specified above, for use later.
       - name: Get current date and time
         id: date
-        run: echo "::set-output name=date::$(TZ='${{ env.Timezone }}' date +'%Y-%m-%d %T')"
+        run: echo "::set-output name=date::$(TZ='${{ env.Timezone }}' --iso-8601=seconds)"
 
       # Do a string replacement in the schematic file to set the version and date.
       # Any instance of %%version%% in the schematic gets replaced with the release version.
