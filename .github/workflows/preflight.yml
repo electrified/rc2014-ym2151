@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v2
 
       # Run KiBot with the preflight script
-      - uses: INTI-CMNB/KiBot@v1
+      - uses: INTI-CMNB/KiBot@v1_k6
         with:
           config: .kibot/preflight.kibot.yaml
           schema: ${{ github.event.repository.name }}.kicad_sch

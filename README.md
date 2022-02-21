@@ -21,13 +21,22 @@ Yamaha's DX21, DX27 and DX100 synthesisers used a derivative IC which is very si
 Download the latest Documentation zip from the releases section. This contains a HTML iBOM in the BOM folder.
 
 ## Gerbers
-Download the latest JLCPCB zip from the releases section. THis contains standard Gerbers.
+Download the latest JLCPCB zip from the releases section. This contains standard Gerbers.
+
+## Sources / attribution
+Beep program modified from https://commander-cx16.fandom.com/wiki/Beep
+vgmplayer modified from Marco's version at https://groups.google.com/g/rc2014-z80/c/9nHnETJzGKU/m/z1A33J_GBAAJ, in turn modified from jblang's version at https://github.com/jblang/SN76489/blob/master/examples/vgmplayer.asm
 
 ## Background reading/ viewing
 https://ayce.dev/emptyx16.html#9f41h---ym2151-register-data-w--status-r
+
 https://ayce.dev/emptyx16.html#ym2151-fm-operator-type-m-opm
+
 https://www.youtube.com/watch?v=BG6q53p7Z10
+
 https://www.youtube.com/watch?v=GnbT23wGcIA
+
 https://www.youtube.com/watch?v=C8K_VtGyjHM
 
 https://vgmrips.net/wiki/OPM_File_Format
+
