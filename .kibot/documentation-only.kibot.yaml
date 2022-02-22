@@ -32,6 +32,18 @@ preflight:
   # build process works correctly.
   check_zone_fills: true
   ignore_unconnected: false
+  sch_replace:
+    date_command: git log -1 --format='%as' -- $KIBOT_SCH_NAME
+    replace_tags:
+      - tag: "version"
+        command: echo $version
+  pcb_replace:
+    date_command: git log -1 --format='%as' -- $KIBOT_PCB_NAME
+    replace_tags:
+      - tag: "version"
+        command: echo $version
+      - tag: "date"
+        command: git log -1 --format='%as' -- $KIBOT_PCB_NAME
 
 global:
   # Sets the default output filename for all generated files. You likely don't have to change this.

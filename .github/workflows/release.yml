@@ -73,45 +73,6 @@ jobs:
         run: echo "version=${{ github.event.inputs.version }}" >> $GITHUB_ENV
         if: startsWith(github.ref, 'refs/tags/') == false
 
-      # Get the current date and time, in the timezone specified above, for use later.
-      - name: Get current date and time
-        id: date
-        run: echo "::set-output name=date::$(TZ='${{ env.Timezone }}' --iso-8601=seconds)"
-
-      # Do a string replacement in the schematic file to set the version and date.
-      # Any instance of %%version%% in the schematic gets replaced with the release version.
-      # Any instance of %%date%% in the schematic gets replaced with the release date and time.
-      - name: Set schematic version
-        uses: jacobtomlinson/gha-find-replace@v1
-        with:
-          include: ".*.kicad_sch"
-          find: "%%version%%"
-          replace: ${{ env.version }}
-
-      - name: Set schematic date
-        uses: jacobtomlinson/gha-find-replace@v1
-        with:
-          include: ".*.kicad_sch"
-          find: "%%date%%"
-          replace: ${{ steps.date.outputs.date }}
-
-      # Do a string replacement in the PCB file to set the version and date.
-      # Any instance of %%version%% in the schematic gets replaced with the release version.
-      # Any instance of %%date%% in the schematic gets replaced with the release date and time.
-      - name: Set PCB version
-        uses: jacobtomlinson/gha-find-replace@v1
-        with:
-          include: ".*.kicad_pcb"
-          find: "%%version%%"
-          replace: ${{ env.version }}
-
-      - name: Set PCB date on PCB layers
-        uses: jacobtomlinson/gha-find-replace@v1
-        with:
-          include: ".*.kicad_pcb"
-          find: "%%date%%"
-          replace: "${{ steps.date.outputs.date }}"
-
       # Actually run KiBot to generate all the files. The KiBot script used is
       # in the .kibot/release.kibot.yaml folder.
       - name: Generate documentation and fabrication files
