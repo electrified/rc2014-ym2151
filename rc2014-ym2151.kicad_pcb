@@ -7,8 +7,8 @@
   (paper "A4")
   (title_block
     (title "RC2014 YM2151 sound card")
-    (date "%%date%%")
-    (rev "%%version%%")
+    (date "@date@")
+    (rev "@version@")
   )
 
   (layers
@@ -11320,7 +11320,7 @@
   (gr_text " -OP" (at 153.9 149.5) (layer "F.SilkS") (tstamp 00000000-0000-0000-0000-000061985cca)
     (effects (font (size 1 1) (thickness 0.15)))
   )
-  (gr_text "Rev: %%version%%" (at 160.1 160.1) (layer "F.SilkS") (tstamp 00000000-0000-0000-0000-000061994160)
+  (gr_text "Rev: @version@" (at 160.1 160.1) (layer "F.SilkS") (tstamp 00000000-0000-0000-0000-000061994160)
     (effects (font (size 1.5 1.5) (thickness 0.3)) (justify right))
   )
   (gr_text "JLCJLCJLCJLC" (at 111.5 126) (layer "F.SilkS") (tstamp 3f1ab70d-3263-42b5-9c61-0360188ff2b7)

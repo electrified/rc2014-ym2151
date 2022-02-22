@@ -6,8 +6,8 @@
 
   (title_block
     (title "RC2014 YM2151 sound card")
-    (date "%%date%%")
-    (rev "%%version%%")
+    (date "@date@")
+    (rev "@version@")
     (comment 1 "these are the things that dreams are made of")
   )
 
