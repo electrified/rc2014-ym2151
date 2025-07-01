@@ -65,7 +65,7 @@ jobs:
 
       # Archive all the artifacts from output and attach to the action's results.
       - name: Archive production artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: schematic
           path: ${{ env.OutputFolder }}/**
