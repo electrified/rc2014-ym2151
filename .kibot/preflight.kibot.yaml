@@ -32,6 +32,5 @@ preflight:
   run_erc: true
   run_drc: true
   check_zone_fills: true
-global:
-  ignore_unconnected: false
+
 

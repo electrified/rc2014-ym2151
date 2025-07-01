@@ -31,7 +31,6 @@ preflight:
   # This is important to set to true so replacement of version and date strings in the release
   # build process works correctly.
   check_zone_fills: true
-  ignore_unconnected: false
   sch_replace:
     date_command: git log -1 --format='%as' -- $KIBOT_SCH_NAME
     replace_tags:
