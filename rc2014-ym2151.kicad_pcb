@@ -13921,7 +13921,7 @@
 			(justify right)
 		)
 	)
-	(gr_text "2021-2022 Ed Brindley"
+	(gr_text "2021-2025 Ed Brindley"
 		(at 61 160.5 0)
 		(layer "F.SilkS")
 		(uuid "0c3504f3-b1ac-4d16-89e8-22bd078339b8")
