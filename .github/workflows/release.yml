@@ -105,7 +105,7 @@ jobs:
       # If you are copying this to your own repo you'll want to remove the upload of the MobiFlight-Configuration
       # zip file.
       - name: Upload release files
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
