@@ -1,0 +1,6 @@
+Default	True	2.0	3
+IO	True	2.0	3
+analogue	True	2.0	3
+gnd	True	2.0	3
+vcc	True	2.0	3
+False	True
