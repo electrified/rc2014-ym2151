@@ -1,4 +1,5 @@
 (fp_lib_table
-  (lib (name electrified)(type KiCad)(uri ${KIPRJMOD}/libraries/electrified-kicad-library/electrified-footprints.pretty)(options "")(descr "Footprints created by Ed!"))
-  (lib (name local)(type KiCad)(uri ${KIPRJMOD}/libraries/local)(options "")(descr ""))
+  (version 7)
+  (lib (name "electrified")(type "KiCad")(uri "${KIPRJMOD}/libraries/electrified-kicad-library/electrified-footprints.pretty")(options "")(descr "Footprints created by Ed"))
+  (lib (name "local")(type "KiCad")(uri "${KIPRJMOD}/libraries/local")(options "")(descr ""))
 )
