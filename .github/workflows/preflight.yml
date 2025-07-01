@@ -33,7 +33,12 @@ on:
       - "*.kicad_pcb"
       - ".kibot/*.kibot.yaml"
       - ".github/workflows/*.yml"
-
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Design version"
+        required: true
+        default: "pre-release"
 jobs:
   Preflight:
     runs-on: ubuntu-latest
