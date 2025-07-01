@@ -38,7 +38,7 @@ jobs:
   Preflight:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       # Run KiBot with the preflight script
       - uses: INTI-CMNB/KiBot@v1_k6
