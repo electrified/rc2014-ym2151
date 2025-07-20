@@ -1,4 +1,4 @@
 (sym_lib_table
   (version 7)
-  (lib (name "electrified")(type "Legacy")(uri "${KIPRJMOD}/libraries/electrified-kicad-library/electrified-symbols/electrified.lib")(options "")(descr "Shared symbol library"))
+  (lib (name "electrified")(type "KiCad")(uri "${KIPRJMOD}/libraries/electrified-kicad-library/electrified-symbols/electrified.kicad_sym")(options "")(descr "Shared symbol library"))
 )
